@@ -93,10 +93,6 @@
     margin-right: 0;
     margin-bottom: 0;
   }
-  .gallery {
-    width: 80px;
-    margin-right: 10px;
-  }
   .goods-detail-box img {
     width: 100%;
   }
