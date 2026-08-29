@@ -24,19 +24,5 @@
         </view>
     </view>
 
-    <!-- 批发改造：快捷入口 -->
-    <view class="quick-entry">
-        <navigator class="entry-item" url="/pages/category/category">
-            <view class="entry-icon">🛒</view>
-            <text class="entry-text">浏览商品</text>
-        </navigator>
-        <navigator class="entry-item" url="/pages/ucenter/ucenter">
-            <view class="entry-icon">📦</view>
-            <text class="entry-text">我的订单</text>
-        </navigator>
-        <navigator class="entry-item" url="/pages/cart/cart">
-            <view class="entry-icon">🛍️</view>
-            <text class="entry-text">购物车</text>
-        </navigator>
-    </view>
+
 </view>

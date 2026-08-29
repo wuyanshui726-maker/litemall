@@ -75,24 +75,15 @@ export const asyncRoutes = [
   {
     path: '/user',
     component: Layout,
-    redirect: 'noredirect',
+    redirect: 'user/address',
     alwaysShow: true,
     name: 'userManage',
     meta: {
       title: 'app.menu.user',
       icon: 'chart'
     },
+    // 批发改造：只保留收货地址
     children: [
-      {
-        path: 'user',
-        component: () => import('@/views/user/user'),
-        name: 'user',
-        meta: {
-          perms: ['GET /admin/user/list'],
-          title: 'app.menu.user_user',
-          noCache: true
-        }
-      },
       {
         path: 'address',
         component: () => import('@/views/user/address'),
@@ -100,46 +91,6 @@ export const asyncRoutes = [
         meta: {
           perms: ['GET /admin/address/list'],
           title: 'app.menu.user_address',
-          noCache: true
-        }
-      },
-      {
-        path: 'collect',
-        component: () => import('@/views/user/collect'),
-        name: 'collect',
-        meta: {
-          perms: ['GET /admin/collect/list'],
-          title: 'app.menu.user_collect',
-          noCache: true
-        }
-      },
-      {
-        path: 'footprint',
-        component: () => import('@/views/user/footprint'),
-        name: 'footprint',
-        meta: {
-          perms: ['GET /admin/footprint/list'],
-          title: 'app.menu.user_footprint',
-          noCache: true
-        }
-      },
-      {
-        path: 'history',
-        component: () => import('@/views/user/history'),
-        name: 'history',
-        meta: {
-          perms: ['GET /admin/history/list'],
-          title: 'app.menu.user_history',
-          noCache: true
-        }
-      },
-      {
-        path: 'feedback',
-        component: () => import('@/views/user/feedback'),
-        name: 'feedback',
-        meta: {
-          perms: ['GET /admin/feedback/list'],
-          title: 'app.menu.user_feedback',
           noCache: true
         }
       }

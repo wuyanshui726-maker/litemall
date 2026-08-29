@@ -1,98 +1,90 @@
-/* 批发改造：分类页 - 左栏 + 右商品网格布局 */
+/* 批发改造：分类页 - 上下布局（上 tab + 下商品网格） */
 .container {
-  display: flex;
   width: 100%;
-  height: 100vh;
   background: #f5f5f5;
 }
 
-/* 左栏 */
+/* 顶部分类 tab 栏 */
 .cate-nav {
-  width: 180rpx;
+  display: flex;
+  width: 100%;
   background: #fff;
-  flex-shrink: 0;
-  border-right: 1rpx solid #eee;
-}
-
-.cate-nav-body {
-  width: 180rpx;
+  border-bottom: 1rpx solid #eee;
+  padding: 0 40rpx;
 }
 
 .cate-nav .item {
-  padding: 30rpx 0;
+  flex: 1;
   text-align: center;
-  font-size: 28rpx;
+  padding: 28rpx 0;
+  font-size: 30rpx;
   color: #666;
-  border-bottom: 1rpx solid #f5f5f5;
   position: relative;
 }
 
 .cate-nav .item.active {
   color: #e64340;
   font-weight: bold;
-  background: #f5f5f5;
 }
 
-.cate-nav .item.active::before {
+.cate-nav .item.active::after {
   content: '';
   position: absolute;
-  left: 0;
-  top: 20rpx;
-  bottom: 20rpx;
-  width: 6rpx;
+  left: 50%;
+  bottom: 12rpx;
+  transform: translateX(-50%);
+  width: 48rpx;
+  height: 6rpx;
   background: #e64340;
-  border-radius: 0 3rpx 3rpx 0;
+  border-radius: 3rpx;
 }
 
-/* 右商品区域 */
-.goods-area {
-  flex: 1;
-  padding: 20rpx;
-  overflow: hidden;
-}
-
+/* 商品网格 - 两列 */
 .goods-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16rpx;
+  padding: 20rpx;
+  gap: 20rpx;
+  background: #f5f5f5;
 }
 
 .goods-item {
-  width: calc(50% - 8rpx);
+  width: calc(50% - 10rpx);
   background: #fff;
   border-radius: 12rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .goods-item .img {
   width: 100%;
-  height: 280rpx;
+  height: 320rpx;
   background: #f8f8f8;
 }
 
 .goods-item .name {
   font-size: 26rpx;
   color: #333;
-  padding: 12rpx 16rpx 4rpx;
+  padding: 16rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .goods-item .price {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #e64340;
   font-weight: bold;
-  padding: 4rpx 16rpx 16rpx;
+  padding: 0 16rpx 20rpx;
 }
 
 .empty-tip {
   width: 100%;
   text-align: center;
-  padding: 100rpx 0;
+  padding: 120rpx 0;
   color: #999;
-  font-size: 26rpx;
+  font-size: 28rpx;
 }

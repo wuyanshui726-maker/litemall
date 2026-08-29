@@ -1,18 +1,16 @@
 <view class="container">
-  <!-- 批发改造：左边固定侧边栏（食物/饮品） -->
+  <!-- 批发改造：上面只有2个分类 tab -->
   <view class="cate-nav">
-    <scroll-view scroll-y="true" class="cate-nav-body" style="height:{{scrollHeight}}px;">
-      <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" bindtap="switchCate">
-        <view class="name">{{item.name}}</view>
-      </view>
-    </scroll-view>
+    <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" bindtap="switchCate">
+      <view class="name">{{item.name}}</view>
+    </view>
   </view>
 
-  <!-- 批发改造：右边直接显示商品 -->
-  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" class="goods-area" style="height:{{scrollHeight}}px;">
+  <!-- 批发改造：下面直接商品列表，左右两列 -->
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;">
     <view class="goods-grid">
       <navigator class="goods-item" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
-        <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
+        <image class="img" src="{{iitem.picUrl}}" mode="aspectFill"></image>
         <text class="name">{{iitem.name}}</text>
         <text class="price">￥{{iitem.retailPrice}}</text>
       </navigator>
