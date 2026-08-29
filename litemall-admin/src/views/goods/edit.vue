@@ -63,8 +63,11 @@
           <el-button v-else class="button-new-keyword" type="primary" @click="showInput">{{ $t('app.button.add') }}</el-button>
         </el-form-item>
 
-        <el-form-item :label="$t('goods_edit.form.category_id')">
-          <el-cascader v-model="categoryIds" :options="categoryList" clearable expand-trigger="hover" @change="handleCategoryChange" />
+        <el-form-item :label="$t('goods_edit.form.category_id')" prop="categoryId">
+          <el-select v-model="goods.categoryId" :placeholder="'请选择分类'" style="width:100%">
+            <el-option label="食物" :value="2000000" />
+            <el-option label="饮品" :value="2000001" />
+          </el-select>
         </el-form-item>
 
         <!-- 批发改造：保质期管理 -->
@@ -283,7 +286,7 @@
 </style>
 
 <script>
-import { detailGoods, editGoods, listCatAndBrand } from '@/api/goods'
+import { detailGoods, editGoods } from '@/api/goods'
 import { createStorage, uploadPath } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
 import { MessageBox } from 'element-ui'
@@ -299,9 +302,7 @@ export default {
       newKeyword: '',
       keywords: [],
       galleryFileList: [],
-      categoryList: [],
-      categoryIds: [],
-      goods: { gallery: [] },
+      goods: { gallery: [], categoryId: 2000000 },
       specVisiable: false,
       specForm: { specification: '', value: '', picUrl: '' },
       specifications: [{ specification: '规格', value: '标准', picUrl: '' }],
@@ -399,7 +400,6 @@ export default {
         this.specifications = response.data.data.specifications
         this.products = response.data.data.products
         this.attributes = response.data.data.attributes
-        this.categoryIds = response.data.data.categoryIds
 
         this.galleryFileList = []
         for (var i = 0; i < this.goods.gallery.length; i++) {
@@ -413,13 +413,6 @@ export default {
           this.keywords = keywords.split(',')
         }
       })
-
-      listCatAndBrand().then(response => {
-        this.categoryList = response.data.data.categoryList
-      })
-    },
-    handleCategoryChange(value) {
-      this.goods.categoryId = value[value.length - 1]
     },
     handleCancel: function() {
       this.$store.dispatch('tagsView/delView', this.$route)

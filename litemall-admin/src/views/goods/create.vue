@@ -67,8 +67,11 @@
           <el-button v-else class="button-new-keyword" type="primary" @click="showInput">{{ $t('app.button.add') }}</el-button>
         </el-form-item>
 
-        <el-form-item :label="$t('goods_edit.form.category_id')">
-          <el-cascader :options="categoryList" expand-trigger="hover" clearable @change="handleCategoryChange" />
+        <el-form-item :label="$t('goods_edit.form.category_id')" prop="categoryId">
+          <el-select v-model="goods.categoryId" :placeholder="'请选择分类'" style="width:100%">
+            <el-option label="食物" :value="2000000" />
+            <el-option label="饮品" :value="2000001" />
+          </el-select>
         </el-form-item>
 
         <!-- 批发改造：保质期管理 -->
@@ -329,7 +332,7 @@
 </style>
 
 <script>
-import { publishGoods, listCatAndBrand } from '@/api/goods'
+import { publishGoods } from '@/api/goods'
 import { createStorage, uploadPath } from '@/api/storage'
 import Editor from '@tinymce/tinymce-vue'
 import { MessageBox } from 'element-ui'
@@ -345,8 +348,7 @@ export default {
       newKeywordVisible: false,
       newKeyword: '',
       keywords: [],
-      categoryList: [],
-      goods: { picUrl: '', gallery: [], isOnSale: true },
+      goods: { picUrl: '', gallery: [], categoryId: 2000000, isOnSale: true },
       specVisiable: false,
       specForm: { specification: '', value: '', picUrl: '' },
       multipleSpec: false,
@@ -411,12 +413,7 @@ export default {
       }
     },
     init: function() {
-      listCatAndBrand().then(response => {
-        this.categoryList = response.data.data.categoryList
-      })
-    },
-    handleCategoryChange(value) {
-      this.goods.categoryId = value[value.length - 1]
+      // 分类只有2个，使用 <el-select> 直接硬编码，不再调 API
     },
     handleCancel: function() {
       this.$store.dispatch('tagsView/delView', this.$route)
