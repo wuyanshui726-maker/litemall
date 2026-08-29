@@ -1,22 +1,24 @@
+<!-- 分类页：左栏食物/饮品tab + 右栏商品两列网格 -->
 <view class="container">
-  <!-- 批发改造：上面只有2个分类 tab -->
+  <!-- 左栏固定tab -->
   <view class="cate-nav">
-    <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" bindtap="switchCate">
-      <view class="name">{{item.name}}</view>
+    <view wx:for="{{navList}}" wx:key="id"
+          class="nav-item {{ id == item.id ? 'active' : ''}}"
+          data-id="{{item.id}}" bindtap="switchCate">
+      <text>{{item.name}}</text>
     </view>
   </view>
 
-  <!-- 批发改造：下面直接商品列表，左右两列 -->
-  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;">
+  <!-- 右栏滚动商品列表 -->
+  <scroll-view scroll-y="true" class="goods-area">
     <view class="goods-grid">
-      <navigator class="goods-item" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
+      <navigator class="goods-item" url="/pages/goods/goods?id={{iitem.id}}"
+                wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem">
         <image class="img" src="{{iitem.picUrl}}" mode="aspectFill"></image>
-        <text class="name">{{iitem.name}}</text>
-        <text class="price">￥{{iitem.retailPrice}}</text>
+        <view class="name">{{iitem.name}}</view>
+        <view class="price">￥{{iitem.retailPrice}}</view>
       </navigator>
-      <view wx:if="{{goodsList.length === 0}}" class="empty-tip">
-        <text>该分类暂无商品</text>
-      </view>
+      <view wx:if="{{goodsList.length === 0}}" class="empty">该分类暂无商品</view>
     </view>
   </scroll-view>
 </view>

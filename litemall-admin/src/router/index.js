@@ -72,17 +72,16 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
+  // 批发改造：用户管理只有1个子菜单，框架自动扁平化显示收货地址
   {
     path: '/user',
     component: Layout,
     redirect: 'user/address',
-    alwaysShow: true,
     name: 'userManage',
     meta: {
       title: 'app.menu.user',
       icon: 'chart'
     },
-    // 批发改造：只保留收货地址
     children: [
       {
         path: 'address',
@@ -97,46 +96,17 @@ export const asyncRoutes = [
     ]
   },
 
+  // 批发改造：商场管理只保留订单管理
   {
     path: '/mall',
     component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
+    redirect: 'mall/order',
     name: 'mallManage',
     meta: {
       title: 'app.menu.mall',
       icon: 'chart'
     },
     children: [
-      {
-        path: 'region',
-        component: () => import('@/views/mall/region'),
-        name: 'region',
-        meta: {
-          title: 'app.menu.mall_region',
-          noCache: true
-        }
-      },
-      {
-        path: 'brand',
-        component: () => import('@/views/mall/brand'),
-        name: 'brand',
-        meta: {
-          perms: ['GET /admin/brand/list', 'POST /admin/brand/create', 'GET /admin/brand/read', 'POST /admin/brand/update', 'POST /admin/brand/delete'],
-          title: 'app.menu.mall_brand',
-          noCache: true
-        }
-      },
-      {
-        path: 'category',
-        component: () => import('@/views/mall/category'),
-        name: 'category',
-        meta: {
-          perms: ['GET /admin/category/list', 'POST /admin/category/create', 'GET /admin/category/read', 'POST /admin/category/update', 'POST /admin/category/delete'],
-          title: 'app.menu.mall_category',
-          noCache: true
-        }
-      },
       {
         path: 'order',
         component: () => import('@/views/mall/order'),
@@ -146,40 +116,11 @@ export const asyncRoutes = [
           title: 'app.menu.mall_order',
           noCache: true
         }
-      },
-      {
-        path: 'aftersale',
-        component: () => import('@/views/mall/aftersale'),
-        name: 'aftersale',
-        meta: {
-          perms: ['GET /admin/aftersale/list', 'GET /admin/aftersale/detail', 'POST /admin/order/receive', 'POST /admin/aftersale/complete', 'POST /admin/aftersale/reject'],
-          title: 'app.menu.mall_aftersale',
-          noCache: true
-        }
-      },
-      {
-        path: 'issue',
-        component: () => import('@/views/mall/issue'),
-        name: 'issue',
-        meta: {
-          perms: ['GET /admin/issue/list', 'POST /admin/issue/create', 'GET /admin/issue/read', 'POST /admin/issue/update', 'POST /admin/issue/delete'],
-          title: 'app.menu.mall_issue',
-          noCache: true
-        }
-      },
-      {
-        path: 'keyword',
-        component: () => import('@/views/mall/keyword'),
-        name: 'keyword',
-        meta: {
-          perms: ['GET /admin/keyword/list', 'POST /admin/keyword/create', 'GET /admin/keyword/read', 'POST /admin/keyword/update', 'POST /admin/keyword/delete'],
-          title: 'app.menu.mall_keyword',
-          noCache: true
-        }
       }
     ]
   },
 
+  // 批发改造：商品管理 - 删评论，新增下架商品
   {
     path: '/goods',
     component: Layout,
@@ -223,12 +164,12 @@ export const asyncRoutes = [
         hidden: true
       },
       {
-        path: 'comment',
-        component: () => import('@/views/goods/comment'),
-        name: 'goodsComment',
+        path: 'offline',
+        component: () => import('@/views/goods/offline'),
+        name: 'goodsOffline',
         meta: {
-          perms: ['GET /admin/comment/list', 'POST /admin/comment/delete'],
-          title: 'app.menu.goods_comment',
+          perms: ['GET /admin/goods/list', 'POST /admin/goods/update'],
+          title: '商品下架',
           noCache: true
         }
       }

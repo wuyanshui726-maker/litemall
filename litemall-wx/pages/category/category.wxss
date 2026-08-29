@@ -1,87 +1,84 @@
-/* 批发改造：分类页 - 上下布局（上 tab + 下商品网格） */
+/* 分类页：左栏tab + 右栏商品（参照用户参考图） */
 .container {
-  width: 100%;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
   background: #f5f5f5;
 }
 
-/* 顶部分类 tab 栏 */
+/* ===== 左栏固定tab ===== */
 .cate-nav {
-  display: flex;
-  width: 100%;
-  background: #fff;
-  border-bottom: 1rpx solid #eee;
-  padding: 0 40rpx;
+  width: 170rpx;
+  flex-shrink: 0;
+  background: #f5f5f5;
 }
 
-.cate-nav .item {
-  flex: 1;
+.nav-item {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
   text-align: center;
-  padding: 28rpx 0;
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #666;
+  border-left: 6rpx solid transparent;
   position: relative;
 }
 
-.cate-nav .item.active {
+.nav-item.active {
+  background: #fff;
   color: #e64340;
   font-weight: bold;
+  border-left-color: #e64340;
 }
 
-.cate-nav .item.active::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 12rpx;
-  transform: translateX(-50%);
-  width: 48rpx;
-  height: 6rpx;
-  background: #e64340;
-  border-radius: 3rpx;
+/* ===== 右栏商品网格 ===== */
+.goods-area {
+  flex: 1;
+  height: 100vh;
+  background: #fff;
+  padding: 16rpx;
+  box-sizing: border-box;
 }
 
-/* 商品网格 - 两列 */
 .goods-grid {
   display: flex;
   flex-wrap: wrap;
-  padding: 20rpx;
-  gap: 20rpx;
-  background: #f5f5f5;
+  justify-content: space-between;
 }
 
 .goods-item {
-  width: calc(50% - 10rpx);
+  width: 48%;
   background: #fff;
   border-radius: 12rpx;
+  margin-bottom: 20rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.06);
   box-sizing: border-box;
 }
 
 .goods-item .img {
   width: 100%;
-  height: 320rpx;
+  height: 280rpx;
   background: #f8f8f8;
 }
 
 .goods-item .name {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #333;
-  padding: 16rpx;
+  padding: 12rpx 16rpx 4rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .goods-item .price {
-  font-size: 30rpx;
+  font-size: 26rpx;
   color: #e64340;
   font-weight: bold;
-  padding: 0 16rpx 20rpx;
+  padding: 4rpx 16rpx 16rpx;
 }
 
-.empty-tip {
+.empty {
   width: 100%;
   text-align: center;
   padding: 120rpx 0;
