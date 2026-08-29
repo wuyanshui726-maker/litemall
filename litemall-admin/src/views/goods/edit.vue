@@ -34,6 +34,23 @@
           </el-upload>
         </el-form-item>
 
+        <el-form-item :label="$t('goods_edit.form.gallery')">
+          <el-upload
+            :action="uploadPath"
+            :headers="headers"
+            :limit="5"
+            :file-list="galleryFileList"
+            :on-exceed="uploadOverrun"
+            :on-success="handleGalleryUrl"
+            :on-remove="handleRemove"
+            multiple
+            accept=".jpg,.jpeg,.png,.gif"
+            list-type="picture-card"
+          >
+            <i class="el-icon-plus" />
+          </el-upload>
+        </el-form-item>
+
         <el-form-item :label="$t('goods_edit.form.unit')">
           <el-input v-model="goods.unit" :placeholder="$t('goods_edit.placeholder.unit')" />
         </el-form-item>
@@ -281,9 +298,10 @@ export default {
       newKeywordVisible: false,
       newKeyword: '',
       keywords: [],
+      galleryFileList: [],
       categoryList: [],
       categoryIds: [],
-      goods: {  },
+      goods: { gallery: [] },
       specVisiable: false,
       specForm: { specification: '', value: '', picUrl: '' },
       specifications: [{ specification: '规格', value: '标准', picUrl: '' }],
@@ -383,6 +401,13 @@ export default {
         this.attributes = response.data.data.attributes
         this.categoryIds = response.data.data.categoryIds
 
+        this.galleryFileList = []
+        for (var i = 0; i < this.goods.gallery.length; i++) {
+          this.galleryFileList.push({
+            url: this.goods.gallery[i]
+          })
+        }
+
         const keywords = response.data.data.goods.keywords
         if (keywords !== null) {
           this.keywords = keywords.split(',')
@@ -444,6 +469,31 @@ export default {
     },
     uploadPicUrl: function(response) {
       this.goods.picUrl = response.data.url
+    },
+    uploadOverrun: function() {
+      this.$message({
+        type: 'error',
+        message: '上传文件个数超出限制!最多上传5张图片!'
+      })
+    },
+    handleGalleryUrl(response, file, fileList) {
+      if (response.errno === 0) {
+        this.goods.gallery.push(response.data.url)
+      }
+    },
+    handleRemove: function(file, fileList) {
+      for (var i = 0; i < this.goods.gallery.length; i++) {
+        var url
+        if (file.response === undefined) {
+          url = file.url
+        } else {
+          url = file.response.data.url
+        }
+
+        if (this.goods.gallery[i] === url) {
+          this.goods.gallery.splice(i, 1)
+        }
+      }
     },
     specChanged: function(label) {
       if (label === false) {

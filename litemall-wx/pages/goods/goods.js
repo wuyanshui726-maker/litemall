@@ -12,7 +12,6 @@ Page({
     groupon: [], //该商品支持的团购规格
     grouponLink: {}, //参与的团购
     attribute: [],
-    issueList: [],
     comment: [],
     brand: {},
     specificationList: [],
@@ -177,7 +176,6 @@ Page({
         that.setData({
           goods: res.data.info,
           attribute: res.data.attribute,
-          issueList: res.data.issue,
           comment: res.data.comment,
           brand: res.data.brand,
           specificationList: res.data.specificationList,

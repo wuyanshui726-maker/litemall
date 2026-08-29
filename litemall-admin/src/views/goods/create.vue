@@ -31,6 +31,22 @@
           </el-upload>
         </el-form-item>
 
+        <el-form-item :label="$t('goods_edit.form.gallery')">
+          <el-upload
+            :action="uploadPath"
+            :limit="5"
+            :headers="headers"
+            :on-exceed="uploadOverrun"
+            :on-success="handleGalleryUrl"
+            :on-remove="handleRemove"
+            multiple
+            accept=".jpg,.jpeg,.png,.gif"
+            list-type="picture-card"
+          >
+            <i class="el-icon-plus" />
+          </el-upload>
+        </el-form-item>
+
         <el-form-item :label="$t('goods_edit.form.unit')">
           <el-input v-model="goods.unit" :placeholder="$t('goods_edit.placeholder.unit')" />
         </el-form-item>
@@ -330,7 +346,7 @@ export default {
       newKeyword: '',
       keywords: [],
       categoryList: [],
-      goods: { picUrl: '', isOnSale: true },
+      goods: { picUrl: '', gallery: [], isOnSale: true },
       specVisiable: false,
       specForm: { specification: '', value: '', picUrl: '' },
       multipleSpec: false,
@@ -448,6 +464,31 @@ export default {
     },
     uploadPicUrl: function(response) {
       this.goods.picUrl = response.data.url
+    },
+    uploadOverrun: function() {
+      this.$message({
+        type: 'error',
+        message: '上传文件个数超出限制!最多上传5张图片!'
+      })
+    },
+    handleGalleryUrl(response, file, fileList) {
+      if (response.errno === 0) {
+        this.goods.gallery.push(response.data.url)
+      }
+    },
+    handleRemove: function(file, fileList) {
+      for (var i = 0; i < this.goods.gallery.length; i++) {
+        var url
+        if (file.response === undefined) {
+          url = file.url
+        } else {
+          url = file.response.data.url
+        }
+
+        if (this.goods.gallery[i] === url) {
+          this.goods.gallery.splice(i, 1)
+        }
+      }
     },
     specChanged: function(label) {
       if (label === false) {
