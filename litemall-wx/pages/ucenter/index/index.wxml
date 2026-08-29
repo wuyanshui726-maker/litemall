@@ -7,32 +7,24 @@
     </view>
   </view>
 
-  <!-- 所有功能项：左对齐 + 统一大小 + 白色色块 -->
+  <!-- 菜单列表：统一左对齐 + 白色色块 + 相同图标尺寸 -->
   <view class="menu-list">
-    <!-- 订单快捷 -->
-    <view class="menu-item" bindtap='goOrderIndex' data-index='2' data-route='/pages/ucenter/order/order'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/send.png'></image>
-        <text class="badge" wx:if="{{order.unship != 0}}">{{order.unship}}</text>
-      </view>
+    <view class="menu-item" bindtap='goOrderIndex' data-index='2'>
+      <image class="icon" src='/static/images/send.png'></image>
       <text class="label">待发货</text>
+      <text class="badge" wx:if="{{order.unship != 0}}">{{order.unship}}</text>
       <van-icon class="arrow" name="arrow" />
     </view>
 
-    <view class="menu-item" bindtap='goOrderIndex' data-index='3' data-route='/pages/ucenter/order/order'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/receive.png'></image>
-        <text class="badge" wx:if="{{order.unrecv != 0}}">{{order.unrecv}}</text>
-      </view>
+    <view class="menu-item" bindtap='goOrderIndex' data-index='3'>
+      <image class="icon" src='/static/images/receive.png'></image>
       <text class="label">待收货</text>
+      <text class="badge" wx:if="{{order.unrecv != 0}}">{{order.unrecv}}</text>
       <van-icon class="arrow" name="arrow" />
     </view>
 
     <view class="menu-item" bindtap='goOrder'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/allorder.png' wx:if="{{false}}"></image>
-        <view class="icon-text">📦</view>
-      </view>
+      <image class="icon" src='/static/images/pendpay.png'></image>
       <text class="label">我的订单</text>
       <van-icon class="arrow" name="arrow" />
     </view>
@@ -40,9 +32,7 @@
     <view class="divider"></view>
 
     <view class="menu-item" bindtap='goAddress'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/address.png'></image>
-      </view>
+      <image class="icon" src='/static/images/address.png'></image>
       <text class="label">地址管理</text>
       <van-icon class="arrow" name="arrow" />
     </view>
@@ -50,26 +40,14 @@
     <view class="divider"></view>
 
     <button class="menu-item menu-btn" open-type="getPhoneNumber" bindgetphonenumber="bindPhoneNumber">
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/mobile.png'></image>
-      </view>
+      <image class="icon" src='/static/images/mobile.png'></image>
       <text class="label">绑定手机</text>
       <van-icon class="arrow" name="arrow" />
     </button>
 
     <view class="menu-item" bindtap='goHelp'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/help.png'></image>
-      </view>
+      <image class="icon" src='/static/images/help.png'></image>
       <text class="label">帮助中心</text>
-      <van-icon class="arrow" name="arrow" />
-    </view>
-
-    <view class="menu-item" bindtap='goFeedback'>
-      <view class="icon-badge">
-        <image class="icon" src='/static/images/feedback.png'></image>
-      </view>
-      <text class="label">意见反馈</text>
       <van-icon class="arrow" name="arrow" />
     </view>
   </view>

@@ -1,29 +1,32 @@
+<!-- 正确的分类页：pages/catalog/catalog -->
 <view class="container">
+  <!-- 顶部搜索 -->
   <view class="search">
     <navigator url="/pages/search/search" class="input">
       <van-icon name="search"/>
       <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
     </navigator>
   </view>
+
+  <!-- 左栏tab + 右栏商品网格 -->
   <view class="catalog">
     <scroll-view class="nav" scroll-y="true">
-      <view class="item {{ currentCategory.id == item.id ? 'active' : ''}}" wx:for="{{categoryList}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate">{{item.name}}</view>
-    </scroll-view>
-    <scroll-view class="cate" scroll-y="true">
-      <navigator url="url" class="banner">
-        <image class="image" src="{{currentCategory.picUrl}}"></image>
-        <view class="txt">{{currentCategory.frontName}}</view>
-      </navigator>
-      <view class="hd">
-        <text class="line"></text>
-        <text class="txt">{{currentCategory.name}}分类</text>
-        <text class="line"></text>
+      <view class="item {{ id == item.id ? 'active' : ''}}"
+            wx:for="{{navList}}" wx:key="id"
+            data-id="{{item.id}}" bindtap="switchCate">
+        {{item.name}}
       </view>
-      <view class="bd">
-        <navigator url="/pages/category/category?id={{item.id}}" class="item {{(index+1) % 3 == 0 ? 'last' : ''}}" wx:key="id" wx:for="{{currentSubCategoryList}}">
-          <image class="icon" src="{{item.picUrl}}"></image>
-          <text class="txt">{{item.name}}</text>
+    </scroll-view>
+
+    <scroll-view class="cate" scroll-y="true" style="height:{{scrollHeight}}px;">
+      <view class="goods-grid">
+        <navigator class="goods-item" url="/pages/goods/goods?id={{iitem.id}}"
+                  wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem">
+          <image class="img" src="{{iitem.picUrl}}" mode="aspectFill"></image>
+          <text class="name">{{iitem.name}}</text>
+          <text class="price">￥{{iitem.retailPrice}}</text>
         </navigator>
+        <view wx:if="{{goodsList.length === 0}}" class="empty">该分类暂无商品</view>
       </view>
     </scroll-view>
   </view>
