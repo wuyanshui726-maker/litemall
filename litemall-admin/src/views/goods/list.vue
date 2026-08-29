@@ -53,12 +53,6 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" property="iconUrl" :label="$t('goods_list.table.share_url')">
-        <template slot-scope="scope">
-          <img :src="scope.row.shareUrl" width="40">
-        </template>
-      </el-table-column>
-
       <el-table-column align="center" :label="$t('goods_list.table.detail')" prop="detail">
         <template slot-scope="scope">
           <el-dialog :visible.sync="detailDialogVisible" :title="$t('goods_list.dialog.detail')">
@@ -68,21 +62,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" :label="$t('goods_list.table.counter_price')" prop="counterPrice" />
-
       <el-table-column align="center" :label="$t('goods_list.table.retail_price')" prop="retailPrice" />
-
-      <el-table-column align="center" :label="$t('goods_list.table.is_new')" prop="isNew">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.isNew ? 'success' : 'error' ">{{ $t(scope.row.isNew ? 'goods_list.value.is_new_true' : 'goods_list.value.is_new_false') }}</el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" :label="$t('goods_list.table.is_hot')" prop="isHot">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.isHot ? 'success' : 'error' ">{{ $t(scope.row.isHot ? 'goods_list.value.is_hot_true' : 'goods_list.value.is_hot_false') }}</el-tag>
-        </template>
-      </el-table-column>
 
       <el-table-column align="center" :label="$t('goods_list.table.is_on_sale')" prop="isOnSale">
         <template slot-scope="scope">
@@ -234,8 +214,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['商品ID', '商品编号', '名称', '专柜价格', '当前价格', '是否新品', '是否热品', '是否在售', '首页主图', '宣传图片列表', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID', '品牌商ID']
-        const filterVal = ['id', 'goodsSn', 'name', 'counterPrice', 'retailPrice', 'isNew', 'isHot', 'isOnSale', 'listPicUrl', 'gallery', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId', 'brandId']
+        const tHeader = ['商品ID', '商品编号', '名称', '当前价格', '是否在售', '首页主图', '商品介绍', '详细介绍', '商品图片', '商品单位', '关键字', '类目ID']
+        const filterVal = ['id', 'goodsSn', 'name', 'retailPrice', 'isOnSale', 'listPicUrl', 'brief', 'detail', 'picUrl', 'goodsUnit', 'keywords', 'categoryId']
         excel.export_json_to_excel2(tHeader, this.list, filterVal, '商品信息')
         this.downloadLoading = false
       })

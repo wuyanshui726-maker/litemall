@@ -13,23 +13,6 @@
         <el-form-item :label="$t('goods_edit.form.goods_sn')" prop="goodsSn">
           <el-input v-model="goods.goodsSn" />
         </el-form-item>
-        <el-form-item :label="$t('goods_edit.form.counter_price')" prop="counterPrice">
-          <el-input v-model="goods.counterPrice" placeholder="0.00">
-            <template slot="append">元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="$t('goods_edit.form.is_new')" prop="isNew">
-          <el-radio-group v-model="goods.isNew">
-            <el-radio :label="true">{{ $t('goods_edit.value.is_new_true') }}</el-radio>
-            <el-radio :label="false">{{ $t('goods_edit.value.is_new_false') }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item :label="$t('goods_edit.form.is_hot')" prop="isHot">
-          <el-radio-group v-model="goods.isHot">
-            <el-radio :label="false">{{ $t('goods_edit.value.is_hot_false') }}</el-radio>
-            <el-radio :label="true">{{ $t('goods_edit.value.is_hot_true') }}</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item :label="$t('goods_edit.form.is_on_sale')" prop="isOnSale">
           <el-radio-group v-model="goods.isOnSale">
             <el-radio :label="true">{{ $t('goods_edit.value.is_on_sale_true') }}</el-radio>
@@ -51,23 +34,6 @@
           </el-upload>
         </el-form-item>
 
-        <el-form-item :label="$t('goods_edit.form.gallery')">
-          <el-upload
-            :action="uploadPath"
-            :headers="headers"
-            :limit="5"
-            :file-list="galleryFileList"
-            :on-exceed="uploadOverrun"
-            :on-success="handleGalleryUrl"
-            :on-remove="handleRemove"
-            multiple
-            accept=".jpg,.jpeg,.png,.gif"
-            list-type="picture-card"
-          >
-            <i class="el-icon-plus" />
-          </el-upload>
-        </el-form-item>
-
         <el-form-item :label="$t('goods_edit.form.unit')">
           <el-input v-model="goods.unit" :placeholder="$t('goods_edit.placeholder.unit')" />
         </el-form-item>
@@ -82,12 +48,6 @@
 
         <el-form-item :label="$t('goods_edit.form.category_id')">
           <el-cascader v-model="categoryIds" :options="categoryList" clearable expand-trigger="hover" @change="handleCategoryChange" />
-        </el-form-item>
-
-        <el-form-item :label="$t('goods_edit.form.brand_id')">
-          <el-select v-model="goods.brandId" clearable>
-            <el-option v-for="item in brandList" :key="item.value" :label="item.label" :value="item.value" />
-          </el-select>
         </el-form-item>
 
         <!-- 批发改造：保质期管理 -->
@@ -321,11 +281,9 @@ export default {
       newKeywordVisible: false,
       newKeyword: '',
       keywords: [],
-      galleryFileList: [],
       categoryList: [],
-      brandList: [],
       categoryIds: [],
-      goods: { gallery: [] },
+      goods: {  },
       specVisiable: false,
       specForm: { specification: '', value: '', picUrl: '' },
       specifications: [{ specification: '规格', value: '标准', picUrl: '' }],
@@ -420,24 +378,11 @@ export default {
       const goodsId = this.$route.query.id
       detailGoods(goodsId).then(response => {
         this.goods = response.data.data.goods
-        // 稍微调整一下前后端不一致
-        if (this.goods.brandId === 0) {
-          this.goods.brandId = null
-        }
-        if (this.goods.keywords === '') {
-          this.goods.keywords = null
-        }
         this.specifications = response.data.data.specifications
         this.products = response.data.data.products
         this.attributes = response.data.data.attributes
         this.categoryIds = response.data.data.categoryIds
 
-        this.galleryFileList = []
-        for (var i = 0; i < this.goods.gallery.length; i++) {
-          this.galleryFileList.push({
-            url: this.goods.gallery[i]
-          })
-        }
         const keywords = response.data.data.goods.keywords
         if (keywords !== null) {
           this.keywords = keywords.split(',')
@@ -446,7 +391,6 @@ export default {
 
       listCatAndBrand().then(response => {
         this.categoryList = response.data.data.categoryList
-        this.brandList = response.data.data.brandList
       })
     },
     handleCategoryChange(value) {
@@ -500,35 +444,6 @@ export default {
     },
     uploadPicUrl: function(response) {
       this.goods.picUrl = response.data.url
-    },
-    uploadOverrun: function() {
-      this.$message({
-        type: 'error',
-        message: '上传文件个数超出限制!最多上传5张图片!'
-      })
-    },
-    handleGalleryUrl(response, file, fileList) {
-      if (response.errno === 0) {
-        this.goods.gallery.push(response.data.url)
-      }
-    },
-    handleRemove: function(file, fileList) {
-      for (var i = 0; i < this.goods.gallery.length; i++) {
-        // 这里存在两种情况
-        // 1. 如果所删除图片是刚刚上传的图片，那么图片地址是file.response.data.url
-        //    此时的file.url虽然存在，但是是本机地址，而不是远程地址。
-        // 2. 如果所删除图片是后台返回的已有图片，那么图片地址是file.url
-        var url
-        if (file.response === undefined) {
-          url = file.url
-        } else {
-          url = file.response.data.url
-        }
-
-        if (this.goods.gallery[i] === url) {
-          this.goods.gallery.splice(i, 1)
-        }
-      }
     },
     specChanged: function(label) {
       if (label === false) {
