@@ -175,103 +175,10 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/promotion',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'promotionManage',
-    meta: {
-      title: 'app.menu.promotion',
-      icon: 'chart'
-    },
-    children: [
-      {
-        path: 'ad',
-        component: () => import('@/views/promotion/ad'),
-        name: 'ad',
-        meta: {
-          perms: ['GET /admin/ad/list', 'POST /admin/ad/create', 'GET /admin/ad/read', 'POST /admin/ad/update', 'POST /admin/ad/delete'],
-          title: 'app.menu.promotion_ad',
-          noCache: true
-        }
-      },
-      {
-        path: 'coupon',
-        component: () => import('@/views/promotion/coupon'),
-        name: 'coupon',
-        meta: {
-          perms: ['GET /admin/coupon/list', 'POST /admin/coupon/create', 'POST /admin/coupon/update', 'POST /admin/coupon/delete'],
-          title: 'app.menu.promotion_coupon',
-          noCache: true
-        }
-      },
-      {
-        path: 'couponDetail',
-        component: () => import('@/views/promotion/couponDetail'),
-        name: 'couponDetail',
-        meta: {
-          perms: ['GET /admin/coupon/list', 'GET /admin/coupon/listuser'],
-          title: 'app.menu.promotion_coupon_detail',
-          noCache: true
-        },
-        hidden: true
-      },
-      {
-        path: 'topic',
-        component: () => import('@/views/promotion/topic'),
-        name: 'topic',
-        meta: {
-          perms: ['GET /admin/topic/list', 'POST /admin/topic/create', 'GET /admin/topic/read', 'POST /admin/topic/update', 'POST /admin/topic/delete'],
-          title: 'app.menu.promotion_topic',
-          noCache: true
-        }
-      },
-      {
-        path: 'topic-create',
-        component: () => import('@/views/promotion/topicCreate'),
-        name: 'topicCreate',
-        meta: {
-          perms: ['POST /admin/topic/create'],
-          title: 'app.menu.promotion_topic_create',
-          noCache: true
-        },
-        hidden: true
-      },
-      {
-        path: 'topic-edit',
-        component: () => import('@/views/promotion/topicEdit'),
-        name: 'topicEdit',
-        meta: {
-          perms: ['GET /admin/topic/read', 'POST /admin/topic/update'],
-          title: 'app.menu.promotion_topic_edit',
-          noCache: true
-        },
-        hidden: true
-      },
-      {
-        path: 'groupon-rule',
-        component: () => import('@/views/promotion/grouponRule'),
-        name: 'grouponRule',
-        meta: {
-          perms: ['GET /admin/groupon/list', 'POST /admin/groupon/create', 'POST /admin/groupon/update', 'POST /admin/groupon/delete'],
-          title: 'app.menu.promotion_groupon_rule',
-          noCache: true
-        }
-      },
-      {
-        path: 'groupon-activity',
-        component: () => import('@/views/promotion/grouponActivity'),
-        name: 'grouponActivity',
-        meta: {
-          perms: ['GET /admin/groupon/listRecord'],
-          title: 'app.menu.promotion_groupon_activity',
-          noCache: true
-        }
-      }
-    ]
-  },
 
+  // 批发改造：推广管理整栏删除
+
+  // 批发改造：系统管理保留管理员+存储管理(上传商品图片用)
   {
     path: '/sys',
     component: Layout,
@@ -294,36 +201,6 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'notice',
-        component: () => import('@/views/sys/notice'),
-        name: 'sysNotice',
-        meta: {
-          perms: ['GET /admin/notice/list', 'POST /admin/notice/create', 'POST /admin/notice/update', 'POST /admin/notice/delete'],
-          title: 'app.menu.sys_notice',
-          noCache: true
-        }
-      },
-      {
-        path: 'log',
-        component: () => import('@/views/sys/log'),
-        name: 'log',
-        meta: {
-          perms: ['GET /admin/log/list'],
-          title: 'app.menu.sys_log',
-          noCache: true
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/sys/role'),
-        name: 'role',
-        meta: {
-          perms: ['GET /admin/role/list', 'POST /admin/role/create', 'POST /admin/role/update', 'POST /admin/role/delete', 'GET /admin/role/permissions', 'POST /admin/role/permissions'],
-          title: 'app.menu.sys_role',
-          noCache: true
-        }
-      },
-      {
         path: 'os',
         component: () => import('@/views/sys/os'),
         name: 'os',
@@ -336,47 +213,17 @@ export const asyncRoutes = [
     ]
   },
 
+  // 批发改造：配置管理只保留小程序管理
   {
     path: '/config',
     component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
+    redirect: 'config/wx',
     name: 'configManage',
     meta: {
       title: 'app.menu.config',
       icon: 'chart'
     },
     children: [
-      {
-        path: 'mall',
-        component: () => import('@/views/config/mall'),
-        name: 'configMall',
-        meta: {
-          perms: ['GET /admin/config/mall', 'POST /admin/config/mall'],
-          title: 'app.menu.config_mall',
-          noCache: true
-        }
-      },
-      {
-        path: 'express',
-        component: () => import('@/views/config/express'),
-        name: 'configExpress',
-        meta: {
-          perms: ['GET /admin/config/express', 'POST /admin/config/express'],
-          title: 'app.menu.config_express',
-          noCache: true
-        }
-      },
-      {
-        path: 'order',
-        component: () => import('@/views/config/order'),
-        name: 'configOrder',
-        meta: {
-          perms: ['GET /admin/config/order', 'POST /admin/config/order'],
-          title: 'app.menu.config_order',
-          noCache: true
-        }
-      },
       {
         path: 'wx',
         component: () => import('@/views/config/wx'),
@@ -390,90 +237,7 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/stat',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'statManage',
-    meta: {
-      title: 'app.menu.stat',
-      icon: 'chart'
-    },
-    children: [
-      {
-        path: 'user',
-        component: () => import('@/views/stat/user'),
-        name: 'statUser',
-        meta: {
-          perms: ['GET /admin/stat/user'],
-          title: 'app.menu.stat_user',
-          noCache: true
-        }
-      },
-      {
-        path: 'order',
-        component: () => import('@/views/stat/order'),
-        name: 'statOrder',
-        meta: {
-          perms: ['GET /admin/stat/order'],
-          title: 'app.menu.stat_order',
-          noCache: true
-        }
-      },
-      {
-        path: 'goods',
-        component: () => import('@/views/stat/goods'),
-        name: 'statGoods',
-        meta: {
-          perms: ['GET /admin/stat/goods'],
-          title: 'app.menu.stat_goods',
-          noCache: true
-        }
-      }
-    ]
-  },
-  {
-    path: 'external-link',
-    component: Layout,
-    redirect: 'noredirect',
-    alwaysShow: true,
-    name: 'externalLink',
-    meta: {
-      title: 'app.menu.external_link',
-      icon: 'link'
-    },
-    children: [
-      {
-        path: 'https://cloud.tencent.com/product/cos',
-        meta: { title: 'app.menu.external_link_tencent_cos', icon: 'link' }
-      },
-      {
-        path: 'https://cloud.tencent.com/product/sms',
-        meta: { title: 'app.menu.external_link_tencent_sms', icon: 'link' }
-      },
-      {
-        path: 'https://pay.weixin.qq.com/index.php/core/home/login',
-        meta: { title: 'app.menu.external_link_weixin_pay', icon: 'link' }
-      },
-      {
-        path: 'https://mpkf.weixin.qq.com/',
-        meta: { title: 'app.menu.external_link_weixin_mpkf', icon: 'link' }
-      },
-      {
-        path: 'https://www.alibabacloud.com/zh/product/oss',
-        meta: { title: 'app.menu.external_link_alibaba_oss', icon: 'link' }
-      },
-      {
-        path: 'https://www.qiniu.com/products/kodo',
-        meta: { title: 'app.menu.external_link_qiniu_kodo', icon: 'link' }
-      },
-      {
-        path: 'http://www.kdniao.com/api-track',
-        meta: { title: 'app.menu.external_link_kdniao_api', icon: 'link' }
-      }
-    ]
-  },
+  // 批发改造：外链整栏删除
   {
     path: '/profile',
     component: Layout,
