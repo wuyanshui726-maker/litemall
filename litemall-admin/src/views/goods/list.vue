@@ -20,9 +20,6 @@
             <el-form-item :label="$t('goods_list.table.goods_sn')">
               <span>{{ props.row.goodsSn }}</span>
             </el-form-item>
-            <el-form-item :label="$t('goods_list.table.gallery')">
-              <el-image v-for="pic in props.row.gallery" :key="pic" :src="pic" class="gallery" :preview-src-list="props.row.gallery" style="width: 40px; height: 40px" />
-            </el-form-item>
             <el-form-item :label="$t('goods_list.table.brief')">
               <span>{{ props.row.brief }}</span>
             </el-form-item>
@@ -35,10 +32,6 @@
             <el-form-item :label="$t('goods_list.table.category_id')">
               <span>{{ props.row.categoryId }}</span>
             </el-form-item>
-            <el-form-item :label="$t('goods_list.table.brand_id')">
-              <span>{{ props.row.brandId }}</span>
-            </el-form-item>
-
           </el-form>
         </template>
       </el-table-column>
