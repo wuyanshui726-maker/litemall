@@ -932,3 +932,42 @@
   width: 100%;
   height: 6rpx;
 }
+
+/* 批发改造：售罄标签 */
+.sold-out-tag {
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  margin-left: auto;
+}
+
+/* 批发改造：保质期信息 */
+.shelf-info {
+  margin-top: 12rpx;
+  padding: 12rpx 16rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.shelf-item {
+  display: flex;
+  align-items: center;
+}
+.shelf-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-right: 6rpx;
+}
+.shelf-value {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: 500;
+}
+.shelf-value.expire-warn {
+  color: #ff4d4f;
+  font-weight: bold;
+}

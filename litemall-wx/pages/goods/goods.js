@@ -30,6 +30,9 @@ Page({
     collect: false,
     shareImage: '',
     isGroupon: false, //标识是否是一个参团购买
+    // 批发改造
+    allSoldOut: false,
+    expireWarn: false,
     soldout: false,
     canWrite: false, //用户是否获取了保存相册的权限
   },
@@ -158,6 +161,19 @@ Page({
         }
         res.data.info.path = "pages/goods/goods?id=" + that.data.id
 
+        // 批发改造：计算售罄和临期标志
+        var _allSoldOut = true;
+        var _pl = res.data.productList || [];
+        for (var _i = 0; _i < _pl.length; _i++) {
+          if (_pl[_i].number > 0) { _allSoldOut = false; break; }
+        }
+        var _expireWarn = false;
+        var _ed = res.data.info.expireDate;
+        if (_ed) {
+          var _days = Math.ceil((new Date(_ed) - new Date()) / 86400000);
+          if (_days <= 30) _expireWarn = true;
+        }
+
         that.setData({
           goods: res.data.info,
           attribute: res.data.attribute,
@@ -172,7 +188,10 @@ Page({
           groupon: res.data.groupon,
           canShare: res.data.share,
           //选择规格时，默认展示第一张图片
-          tmpPicUrl: _tmpPicUrl
+          tmpPicUrl: _tmpPicUrl,
+          // 批发改造
+          allSoldOut: _allSoldOut,
+          expireWarn: _expireWarn
         });
 
         

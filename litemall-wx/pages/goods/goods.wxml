@@ -8,6 +8,8 @@
   <view class='goods_name'>
     <view class='goods_name_left'>{{goods.name}}</view>
     <view hidden="{{!canShare}}" class="goods_name_right" bindtap="shareFriendOrCircle">分享</view>
+    <!-- 批发改造：售罄标签 -->
+    <view wx:if="{{allSoldOut}}" class="sold-out-tag">售罄</view>
   </view>
   <view class="share-pop-box" hidden="{{!openShare}}">
     <view class="share-pop">
@@ -43,6 +45,22 @@
         <navigator url="../brandDetail/brandDetail?id={{brand.id}}">
           <text>{{brand.name}}</text>
         </navigator>
+      </view>
+
+      <!-- 批发改造：保质期信息 -->
+      <view class="shelf-info" wx:if="{{goods.productionDate || goods.shelfLifeDays}}">
+        <view class="shelf-item" wx:if="{{goods.productionDate}}">
+          <text class="shelf-label">生产日期</text>
+          <text class="shelf-value">{{goods.productionDate}}</text>
+        </view>
+        <view class="shelf-item" wx:if="{{goods.shelfLifeDays}}">
+          <text class="shelf-label">保质期</text>
+          <text class="shelf-value">{{goods.shelfLifeDays}}天</text>
+        </view>
+        <view class="shelf-item" wx:if="{{goods.expireDate}}">
+          <text class="shelf-label">到期日</text>
+          <text class="shelf-value {{expireWarn ? 'expire-warn' : ''}}">{{goods.expireDate}}</text>
+        </view>
       </view>
     </view>
   </view>

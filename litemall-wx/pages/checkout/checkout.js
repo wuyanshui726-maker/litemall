@@ -145,66 +145,12 @@ Page({
       grouponLinkId: this.data.grouponLinkId
     }, 'POST').then(res => {
       if (res.errno === 0) {
-
-        // 下单成功，重置couponId
-        try {
-          wx.setStorageSync('couponId', 0);
-        } catch (error) {
-
-        }
-
+        // 批发改造：后端下单即视为已付款，直接跳支付成功页
+        try { wx.setStorageSync('couponId', 0); } catch (error) {}
         const orderId = res.data.orderId;
-        const grouponLinkId = res.data.grouponLinkId;
-        const payed = res.data.payed
-        if (payed) {
-          wx.redirectTo({
-            url: '/pages/payResult/payResult?status=1&orderId=' + orderId
-          });
-          return
-        }
-        util.request(api.OrderPrepay, {
-          orderId: orderId
-        }, 'POST').then(function(res) {
-          if (res.errno === 0) {
-            const payParam = res.data;
-            console.log("支付过程开始");
-            wx.requestPayment({
-              'timeStamp': payParam.timeStamp,
-              'nonceStr': payParam.nonceStr,
-              'package': payParam.packageValue,
-              'signType': payParam.signType,
-              'paySign': payParam.paySign,
-              'success': function(res) {
-                console.log("支付过程成功");
-                if (grouponLinkId) {
-                  setTimeout(() => {
-                    wx.redirectTo({
-                      url: '/pages/groupon/grouponDetail/grouponDetail?id=' + grouponLinkId
-                    })
-                  }, 1000);
-                } else {
-                  wx.redirectTo({
-                    url: '/pages/payResult/payResult?status=1&orderId=' + orderId
-                  });
-                }
-              },
-              'fail': function(res) {
-                console.log("支付过程失败");
-                wx.redirectTo({
-                  url: '/pages/payResult/payResult?status=0&orderId=' + orderId
-                });
-              },
-              'complete': function(res) {
-                console.log("支付过程结束")
-              }
-            });
-          } else {
-            wx.redirectTo({
-              url: '/pages/payResult/payResult?status=0&orderId=' + orderId
-            });
-          }
+        wx.redirectTo({
+          url: '/pages/payResult/payResult?status=1&orderId=' + orderId
         });
-
       } else {
         util.showErrorToast(res.errmsg);
       }

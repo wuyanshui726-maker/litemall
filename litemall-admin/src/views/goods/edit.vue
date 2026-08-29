@@ -90,6 +90,21 @@
           </el-select>
         </el-form-item>
 
+        <!-- 批发改造：保质期管理 -->
+        <el-form-item label="生产日期">
+          <el-date-picker v-model="goods.productionDate" type="date" placeholder="选择生产日期" value-format="yyyy-MM-dd" style="width: 100%;" />
+        </el-form-item>
+        <el-form-item label="保质期(天)">
+          <el-input-number v-model="goods.shelfLifeDays" :min="1" :max="36500" placeholder="例如: 180" style="width: 100%;" />
+        </el-form-item>
+        <el-form-item label="到期日期">
+          <el-date-picker v-model="goods.expireDate" type="date" placeholder="自动计算" value-format="yyyy-MM-dd" disabled style="width: 100%;" />
+          <div style="color: #909399; font-size: 12px; margin-top: 4px;">到期日 = 生产日期 + 保质期天数</div>
+        </el-form-item>
+        <el-form-item label="低库存预警">
+          <el-input-number v-model="goods.lowStockThreshold" :min="0" :max="9999" placeholder="低于此值时提醒补货" style="width: 100%;" />
+        </el-form-item>
+
         <el-form-item :label="$t('goods_edit.form.brief')">
           <el-input v-model="goods.brief" />
         </el-form-item>
@@ -374,10 +389,29 @@ export default {
       return attributesData
     }
   },
+  // 批发改造：生产日期 + 保质期天数 → 自动算到期日
+  watch: {
+    'goods.productionDate': function() { this.calcExpireDate() },
+    'goods.shelfLifeDays': function() { this.calcExpireDate() }
+  },
   created() {
     this.init()
   },
   methods: {
+    calcExpireDate() {
+      var pd = this.goods.productionDate
+      var sl = this.goods.shelfLifeDays
+      if (pd && sl && sl > 0) {
+        var d = new Date(pd)
+        d.setDate(d.getDate() + sl)
+        var y = d.getFullYear()
+        var m = String(d.getMonth() + 1).padStart(2, '0')
+        var day = String(d.getDate()).padStart(2, '0')
+        this.$set(this.goods, 'expireDate', y + '-' + m + '-' + day)
+      } else {
+        this.$set(this.goods, 'expireDate', null)
+      }
+    },
     init: function() {
       if (this.$route.query.id == null) {
         return
