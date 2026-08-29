@@ -1,24 +1,23 @@
 <view class="container">
+  <!-- 批发改造：左边固定侧边栏（食物/饮品） -->
   <view class="cate-nav">
-    <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
-      <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate">
+    <scroll-view scroll-y="true" class="cate-nav-body" style="height:{{scrollHeight}}px;">
+      <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" bindtap="switchCate">
         <view class="name">{{item.name}}</view>
       </view>
     </scroll-view>
   </view>
-  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;">
 
-    <view class="cate-item">
-      <view class="h">
-        <text class="name">{{currentCategory.name}}</text>
-        <text class="desc">{{currentCategory.desc}}</text>
-      </view>
-      <view class="b">
-        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
-          <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
-          <text class="name">{{iitem.name}}</text>
-          <text class="price">￥{{iitem.retailPrice}}</text>
-        </navigator>
+  <!-- 批发改造：右边直接显示商品 -->
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" class="goods-area" style="height:{{scrollHeight}}px;">
+    <view class="goods-grid">
+      <navigator class="goods-item" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
+        <image class="img" src="{{iitem.picUrl}}" background-size="cover"></image>
+        <text class="name">{{iitem.name}}</text>
+        <text class="price">￥{{iitem.retailPrice}}</text>
+      </navigator>
+      <view wx:if="{{goodsList.length === 0}}" class="empty-tip">
+        <text>该分类暂无商品</text>
       </view>
     </view>
   </scroll-view>
